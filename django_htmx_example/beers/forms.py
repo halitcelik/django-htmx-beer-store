@@ -7,7 +7,11 @@ class BeerForm(forms.ModelForm):
 
     class Meta:
         model = Beer
-        fields = ("name", "style", "category")
+        fields = (
+            "name",
+            "category",
+            "style",
+        )
 
 
 class BeerDescriptionForm(forms.ModelForm):
