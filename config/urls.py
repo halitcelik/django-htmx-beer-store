@@ -16,8 +16,6 @@ urlpatterns = [
     # User management
     path("users/", include("django_htmx_example.users.urls", namespace="users")),
     path("examples/", include("beers.urls", namespace="examples")),
-    path("events/", include("events.urls", namespace="events")),
-    path("hx-events/", include("htmx_events.urls", namespace="htmx_events")),
     path("accounts/", include("allauth.urls")),
     # Your stuff: custom urls includes go here
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
