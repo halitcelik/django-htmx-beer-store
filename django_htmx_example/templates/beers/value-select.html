@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+{% block title %}Value select{% endblock title %}
+{% load static %}
+
+<div class="wrapper">
+
+    {% include "beers/includes/sidebar.html" %}
+
+    <div class="main-panel">
+        {% include "beers/includes/nav.html" with title="Value select" %}
+            <div class="container-fluid">
+                <div class="card">
+                    <div class="card-content">
+                        <form 
+                            class="row" 
+                            id="category-style-form" 
+                            action="{% url 'beers:value-select' %}"
+                            method="get"
+                            data-hx-get="{% url 'beers:value-select' %}"
+                            data-hx-target="#datatables"
+                            data-hx-swap="innerHTML"
+                            data-hx-indicator=".htmx-indicator"
+                            required>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">
+                                        Category<star>*</star>
+                                    </label>
+                                    <select 
+                                        name="c" 
+                                        class="form-control"
+                                        data-hx-get="{% url 'beers:style-select' %}"
+                                        data-hx-target="#style-select-container"
+                                        data-hx-swap="innerHTML"
+                                        required
+                                        >
+                                        {% for category in categories %}
+                                            <option value="{{category.pk}}">{{category}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div id="style-select-container" class="col-md-6">
+                                {% include "beers/includes/styles-select.html" %}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        <div id="content" class="content">
+            <img class="htmx-indicator" id="indicator" style="margin: auto; height: 1.8rem; width:1.8rem" src="{% static 'img/indicator.svg' %}">
+            {% include "beers/includes/beers-table.html" %}
+        </div>  
+        
+    </div>
+</div>
+
+{% endblock %}

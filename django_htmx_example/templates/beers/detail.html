@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Beer details{% endblock title %}
+{% block content %}
+<div class="wrapper">
+
+    {% include "beers/includes/sidebar.html" %}
+
+    <div class="main-panel">
+        {% include "beers/includes/nav.html" with title="Beer details"%}
+        <div id="content" class="content">
+            <div class="content">
+                <div class="container-fluid">
+                    <div class="card">
+                        <div class="card-content row">
+                            <img class="col-md-8" src="{% static 'img/sise_pixel.jpg' %}">
+                            <div class="col-md-4">
+                                <h3>{{beer.name}}</h3>
+                                <p>{{beer.descript}}</p>
+                                <p><b>IBU:</b> {{beer.ibu}}</p>
+                                <p><b>ABV:</b> {{beer.abv}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="content">
+                <div class="container-fluid">
+                    <div class="card">
+                        <div class="card-content row" data-hx-get="{% url 'beers:similar' beer.pk %}" data-hx-trigger="load" data-hx-target="this" data-hx-swap="innerHTML" style="min-height: 300px;">
+                            <div class="flex htmx-indicator" style="position:absolute;left:calc(50% - 2rem);"><img class="" style="margin: auto;" src="{% static 'img/indicator.svg' %}"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,25 @@
+<table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+    <thead>
+        <tr>
+            <th>Nick</th>
+            <th>First name</th>
+            <th>Last Name</th>
+            <th>Responden on</th>
+            <th class="disabled-sorting">Actions</th>
+        </tr>
+    </thead>
+    <tbody>   
+        {% for attendee in event.attendees.all %}
+            {% include "events/includes/attendee-row.html" %}
+        {% endfor %}                                     
+    </tbody>
+    <tfoot>
+        <tr>
+            <th>Nick</th>
+            <th>First name</th>
+            <th>Last Name</th>
+            <th>Responded on</th>
+            <th class="disabled-sorting">Actions</th>
+        </tr>
+    </tfoot>
+</table>

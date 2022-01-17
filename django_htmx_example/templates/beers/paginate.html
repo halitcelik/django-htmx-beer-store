@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Paginate{% endblock title %}
+{% block content %}
+<div class="wrapper">
+
+	{% include "beers/includes/sidebar.html" %}
+
+	<div class="main-panel">
+		{% include "beers/includes/nav.html" with title="Paginate"%}
+		<div class="row container-fluid">
+			<div class="col-md-12">
+				{% lorem 5 b random %}
+			</div>
+		</div>
+		<div id="content" class="content">
+			<div id="beers-table">
+				{% include "beers/includes/beers-table.html" %}
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock content %}

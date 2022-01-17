@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load static crispy_forms_tags %}
+{% block content %}
+<div class="wrapper">
+    {% include "beers/includes/sidebar.html" %}
+    <div class="main-panel">
+        {% include "beers/includes/nav.html" with title="Tabs and Forms"%}
+
+        <div id="content" class="content" data-hx-target="this">
+            {% include 'beers/includes/create-form.html' %}
+        </div>
+    </div>
+</div>
+{% endblock content %}

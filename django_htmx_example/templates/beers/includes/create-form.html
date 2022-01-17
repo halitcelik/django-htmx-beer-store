@@ -1,0 +1,34 @@
+{% load crispy_forms_tags %}
+<div class="card card-wizard" id="wizardCard">
+    <form id="wizardForm" method="" action="{% url 'beers:create' step %}" 
+        data-hx-post="{% url 'beers:create' step %}"
+        data-hx-swap="innerHTML"
+        data-hx-push-url="true"
+        >
+        <div class="card-header text-center">
+            <h4 class="card-title">Add your own beer</h4>
+            <p class="category">Split a django form in multiple steps</p>
+        </div>
+        <div class="card-content">
+            <ul class="nav nav-pills">
+                <li style="width: 33.3333%;" {% if step == 1 %}class="active"{% endif %}><a data-hx-get="{% url 'beers:create' 1 %}" href="{% url 'beers:create' 1 %}">First Tab</a></li>
+                <li style="width: 33.3333%;" {% if step == 2 %}class="active"{% endif %}><a data-hx-get="{% url 'beers:create' 2 %}" href="{% url 'beers:create' 2 %}">Second Tab</a></li>
+                <li style="width: 33.3333%;" {% if step == 3 %}class="active"{% endif %}><a data-hx-get="{% url 'beers:create' 3 %}" href="{% url 'beers:create' 3 %}">Third Tab</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active">
+                    <div class="row" style="display: flex; gap: 1rem;">
+                        {{form|crispy}} 
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <button type="button" class="btn btn-default btn-fill btn-wd pull-left"
+                {% if step is 1 %}style="display: none;"{% endif %}>Back</button>
+            <button {% if step is 3 %}style="display: none;"{% endif %} type="submit" class="btn btn-info btn-fill btn-wd btn-next pull-right">Next</button>
+            <button {% if step is not 3 %}style="display: none;"{% endif %}type="submit" class="btn btn-info btn-fill btn-wd pull-right">Finish</button>
+            <div class="clearfix"></div>
+        </div>
+    </form>
+</div>

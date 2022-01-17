@@ -1,0 +1,42 @@
+{% load favourite_tags %}
+
+{% if infinite_scroll or value_select %}
+    {% for beer in beers %}
+        <div class="row fade-out"  style="border-top: 1px solid #f4f3ef;display: flex;"
+            {% if infinite_scroll and forloop.first %}
+                data-hx-get="?p={{ beers.next_page_number }}"
+                data-hx-target="#datatables"
+                data-hx-trigger="revealed"
+                data-hx-swap="beforeend"
+            {% endif %}
+            >
+            <a class="col-md-4" href="{{beer.get_absolute_url}}"><h5>{{beer.name|default:"n/a"}}</h5></a>
+            <p style="margin-top: auto; margin-bottom: auto;" class="col-md-3">{{beer.style|default:"n/a"}}</p>
+            <p style="margin-top: auto; margin-bottom: auto;" class="col-md-3">{{beer.category|default:"n/a"}}</p>
+            <p style="margin-top: auto; margin-bottom: auto;" class="col-md-2">
+                <a href="{% url 'beers:edit' beer.pk %}"  data-hx-target="closest .row" data-hx-get="{% url 'beers:edit' beer.pk %}" data-hx-swap="outerHTML" class="btn btn-simple btn-xs btn-info btn-icon like"><i class="ti-pencil"></i></a>
+                <a href="{% url 'beers:delete' beer.pk %}"  data-hx-target="closest .row" data-hx-delete="{% url 'beers:delete' beer.pk %}" data-hx-confirm="Are you sure to delete {{beer.name}}" class="btn btn-simple btn-xs btn-danger btn-icon remove"><i class="ti-close"></i></a>
+                {% if request.user.is_authenticated %}
+                    <a href="{% url 'beers:favourite' beer.pk %}"  data-hx-target="closest .row" data-hx-put="{% url 'beers:favourite' beer.pk %}" data-hx-swap="outerHTML" class="btn btn-simple btn-xs {% is_in_favourites beer %} btn-icon"><i class="ti-heart"></i></a>
+                {% endif %}
+            </p>
+        </div>
+    {% empty  %}
+        <div class="row"  style="border-top: 1px solid #f4f3ef;display: flex;">
+            <h6 style="margin: auto">Nothing found</h6>
+        </div>
+    {% endfor %}
+{% else %}
+    <div class="row"  style="border-top: 1px solid #f4f3ef;display: flex;">
+        <a class="col-md-4" href="{{beer.get_absolute_url}}"><h5>{{beer.name|default:"n/a"}}</h5></a>
+        <p style="margin-top: auto; margin-bottom: auto;" class="col-md-3">{{beer.style|default:"n/a"}}</p>
+        <p style="margin-top: auto; margin-bottom: auto;" class="col-md-3">{{beer.category|default:"n/a"}}</p>
+        <p style="margin-top: auto; margin-bottom: auto;" class="col-md-2">
+            <a href="{% url 'beers:edit' beer.pk %}"  data-hx-target="closest .row" data-hx-get="{% url 'beers:edit' beer.pk %}" data-hx-swap="outerHTML" class="btn btn-simple btn-xs btn-info btn-icon like"><i class="ti-pencil"></i></a>
+            <a href="{% url 'beers:delete' beer.pk %}"  data-hx-target="closest .row" data-hx-delete="{% url 'beers:delete' beer.pk %}" data-hx-confirm="Are you sure to delete {{beer.name}}" class="btn btn-simple btn-xs btn-danger btn-icon remove"><i class="ti-close"></i></a>
+            {% if request.user.is_authenticated %}
+                <a href="{% url 'beers:favourite' beer.pk %}"  data-hx-target="closest .row" data-hx-put="{% url 'beers:favourite' beer.pk %}" data-hx-swap="outerHTML" class="btn btn-simple btn-xs {% is_in_favourites beer %} btn-icon"><i class="ti-heart"></i></a>
+            {% endif %}
+        </p>
+    </div>
+{% endif %}

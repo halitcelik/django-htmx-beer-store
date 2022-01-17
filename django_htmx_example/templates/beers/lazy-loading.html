@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Lazy loading{% endblock title %}
+{% block content %}
+
+<div class="wrapper">
+
+		{% include "beers/includes/sidebar.html" %}
+
+	    <div class="main-panel">
+			{% include "beers/includes/nav.html" with title="Lazy loading" %}
+
+	        <div id="beers-table" class="content" 
+                {% if not beers.exists %}
+                    data-hx-get="{% url 'beers:lazy-loading' %}"
+                    data-hx-push-url="true"                                                  
+                    data-hx-target="this"
+                    data-hx-trigger="revealed"
+                    data-hx-swap="innerHTML"
+                {% endif %}
+            >
+                {% include "beers/includes/beers-table.html" %}
+            </div>      
+		</div>
+	</div>
+{% endblock content %}
+    

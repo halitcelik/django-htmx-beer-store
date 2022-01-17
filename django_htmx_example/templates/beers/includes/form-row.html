@@ -1,0 +1,13 @@
+{% load i18n crispy_forms_tags %}
+
+<form style="display: flex; gap: 1rem;"
+    action="{% url 'beers:edit' beer.pk %}"
+    method="post"
+    {% if request.htmx %}
+    hx-post="{% url 'beers:edit' beer.pk %}" hx-target="this" hx-swap="outerHTML"
+    {% endif %}
+    >
+    {% csrf_token %}
+    {{form|crispy}} 
+    <button style="margin: 2.4rem auto;height:4rem;">Save</button>
+<form>

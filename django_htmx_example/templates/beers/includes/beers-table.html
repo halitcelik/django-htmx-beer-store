@@ -1,0 +1,18 @@
+{% load static i18n bootstrap_pagination %}
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-content">
+            <div id="datatables" class="fresh-datatables">
+                <div class="flex htmx-indicator" style="position:absolute;left:calc(50% - 2rem);"><img class="" style="margin: auto;" src="{% static 'img/indicator.svg' %}"></div>
+                {% for beer in beers %}
+                    {% include "beers/includes/beer-row.html" %}
+                {% endfor %}   
+                <div class="flex">
+                    {% if beers %}
+                        {% bootstrap_paginate beers range=10 show_first_last="true"%}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

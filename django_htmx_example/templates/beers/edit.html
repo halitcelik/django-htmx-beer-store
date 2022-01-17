@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>Editing {{beer}} beer</h1>
+    <div class="row">
+        <div class="col-md-8">
+            {% include "beers/includes/form-row.html" %}
+        </div>
+    </div>
+{% endblock content %}
+

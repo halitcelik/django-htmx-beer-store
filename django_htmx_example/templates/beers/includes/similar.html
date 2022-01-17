@@ -1,0 +1,8 @@
+{% load static %}
+<h4 class="col-md-12" style="margin-left: 1.5rem">Similar beers</h4>
+{% for beer in similar_beers %}
+<div class="col-md-4">
+    <img class="col-md-12" src="{% static 'img/sise_pixel.jpg' %}">
+    <h5 class="col-md-12">{{beer}}</h5>
+</div>
+{% endfor %}

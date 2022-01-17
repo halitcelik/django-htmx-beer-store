@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Active search{% endblock title %}
+{% block content %}
+<div class="wrapper">
+
+	{% include "beers/includes/sidebar.html" %}
+
+	<div class="main-panel">
+		{% include "beers/includes/nav.html" with title="Active search"%}
+		<div id="content" class="content">
+			<div class="row container-fluid">
+				<form action="{% url 'beers:active-search' %}" method="get" class="form-group col-md-6">
+					<label class="control-label">
+						Search
+						<img class="htmx-indicator" id="indicator" style="margin: auto; height: 1.8rem; width:1.8rem" src="{% static 'img/indicator.svg' %}">
+					</label>
+					<input 
+						placeholder="Begin Typing To Search..." 
+						data-hx-get="{% url 'beers:active-search' %}" 
+						data-hx-trigger="keyup[target.value.length > 3 || target.value.length === 0] changed delay:500ms" 
+						data-hx-target="#beers-table"
+						data-hx-push-url="true"
+						data-hx-indicator="#indicator"
+						style="background:#fafafa" 
+						class="form-control" 
+						type="text"
+						value="{{query|default:''}}"
+						name="q" />
+				</form>
+			</div>
+			<div class="content">
+				<div class="container-fluid">
+					<div class="card">
+						<div class="card-content">
+							<div id="beers-table"  class="fresh-datatables">
+								{% include "beers/includes/beers-table.html" %}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock content %}

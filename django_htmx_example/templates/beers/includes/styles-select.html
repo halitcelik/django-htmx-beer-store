@@ -1,0 +1,15 @@
+    <div class="form-group">
+        <label class="control-label">
+            Style<star>*</star>
+        </label>
+        <select name="s" class="form-control" required 
+            data-hx-post="{% url 'beers:value-select' %}"
+            data-hx-target="#datatables"
+            data-hx-swap="innerHTML"
+            data-hx-indicator=".htmx-indicator" data-hx-trigger="change">
+            <option value="">Choose a style</option>
+            {% for style in styles %}
+                <option value="{{style.pk}}">{{style}}</option>
+            {% endfor %}
+        </select>
+    </div>
