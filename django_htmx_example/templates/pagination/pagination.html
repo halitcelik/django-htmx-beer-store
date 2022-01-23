@@ -1,0 +1,40 @@
+{% load i18n %}
+<ul class="center-block  pagination-sm">
+    <ul class="center-block pagination ">
+        {% if beers.has_previous %}
+            <li class="page-item">
+                <a class="page-link" aria-label="First Page" href="?p=1{% if query %}&q={{query}}{% endif %}" data-hx-get="?p=1" data-hx-target="#beers-table" data-hx-push-url="true" data-hx-indicator=".htmx-indicator" title="First Page"><span aria-hidden="true">1</span></a>
+            </li>
+            <li class="page-item">
+                <a  class="page-link" href="?p={{ beers.previous_page_number }}{% if query %}&q={{query}}{% endif %}" data-hx-get="?p={{ beers.previous_page_number }}{% if query %}&q={{query}}{% endif %}" data-hx-target="#beers-table" data-hx-push-url="true" data-hx-indicator=".htmx-indicator"><span aria-hidden="true">←</span></a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+                <a class="page-link" aria-label="First Page" href="?p=1{% if query %}&q={{query}}{% endif %}" data-hx-get="?p=1{% if query %}&q={{query}}{% endif %}" data-hx-target="#beers-table" data-hx-push-url="true" data-hx-indicator=".htmx-indicator" title="First Page"><span aria-hidden="true">1</span></a>
+            </li>
+            <li class="page-item disabled">
+                <a  class="page-link" href="?p="><span aria-hidden="true">←</span></a>
+            </li>
+        {% endif %}
+
+        <li class="page-item active">
+            <span class="page-link" aria-label="{% trans 'Current Page' %}" title="{% trans 'Current Page' %}">{{ beers.number }}</span>
+        </li>
+
+        {% if beers.has_next %}
+        <li class="page-item">
+            <a class="page-link" aria-label="Next Page" title="Next Page" href="?p={{beers.next_page_number}}{% if query %}&q={{query}}{% endif %}" data-hx-get="?p={{beers.next_page_number}}{% if query %}&q={{query}}{% endif %}" data-hx-target="#beers-table" data-hx-push-url="true" data-hx-indicator=".htmx-indicator"><span aria-hidden="true">→</span></a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" aria-label="First Page" href="?p={{ beers.paginator.num_pages }}{% if query %}&q={{query}}{% endif %}" data-hx-get="?p={{ beers.paginator.num_pages }}{% if query %}&q={{query}}{% endif %}" data-hx-target="#beers-table" data-hx-push-url="true" data-hx-indicator=".htmx-indicator" title="Last Page"><span aria-hidden="true">{{ beers.paginator.num_pages }}</span></a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" aria-label="Next Page" title="Next Page" href="?p={{beers.number}}{% if query %}&q={{query}}{% endif %}" data-hx-get="?p={{beers.number}}{% if query %}&q={{query}}{% endif %}" data-hx-target="#beers-table" data-hx-push-url="true" data-hx-indicator=".htmx-indicator"><span aria-hidden="true">→</span></a>
+        </li>
+        <li class="page-item disabled">
+            <a class="page-link" aria-label="Last Page" href="?p={{ beers.paginator.num_pages }}{% if query %}&q={{query}}{% endif %}" data-hx-get="?p={{ beers.paginator.num_pages }}{% if query %}&q={{query}}{% endif %}" data-hx-target="#beers-table" data-hx-push-url="true" data-hx-indicator=".htmx-indicator" title="Last Page"><span aria-hidden="true">{{ beers.paginator.num_pages }}</span></a>
+        </li>
+        {% endif %}
+    </span>
+</ul>

@@ -61,7 +61,12 @@ def edit(request, pk):
         if form.is_valid():
             beer = form.save()
             if request.htmx:
-                return render(request, "beers/includes/beer-row.html", {"beer": beer})
+                message = f"{beer.name} is saved successfully."
+                return render(
+                    request,
+                    "beers/includes/beer-row-edited.html",
+                    {"beer": beer, "message": message},
+                )
             else:
                 return redirect(reverse("beers:click-to-edit"))
         else:
@@ -74,16 +79,14 @@ def edit(request, pk):
 @require_http_methods(["DELETE"])
 def delete(request, pk):
     beer = get_object_or_404(Beer, pk=pk)
-    beer_name = beer.name
     beer.delete()
-    return render(
-        request, "beers/includes/delete-success.html", {"beer_name": beer_name}
-    )
+    message = f"{beer.name} is deleted."
+    return render(request, "beers/includes/delete-success.html", {"message": message})
 
 
 def active_search(request):
     query = request.GET.get("q")
-    page = request.GET.get("page", 1)
+    page = request.GET.get("p", 1)
     template = "beers/active-search.html"
     if request.htmx:
         template = "beers/includes/beers-table.html"
@@ -97,7 +100,6 @@ def active_search(request):
         {
             "beers": Paginator(beers, 10).get_page(page),
             "page": page,
-            "total": len(beers),
             "query": query,
         },
     )

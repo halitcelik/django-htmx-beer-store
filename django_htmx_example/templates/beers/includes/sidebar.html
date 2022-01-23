@@ -24,28 +24,10 @@
                     <p>Lazy Loading</p>
                 </a>
             </li>
-            <li class="{% active_link 'beers:infinite-scroll'%}">
-                <a href="{% url 'beers:infinite-scroll' %}">
-                    <i class="ti-panel"></i>
-                    <p>Infinite Scroll</p>
-                </a>
-            </li>
             <li class="{% active_link 'beers:active-search'%}">
                 <a href="{% url 'beers:active-search' %}">
                     <i class="ti-panel"></i>
                     <p>Active Search</p>
-                </a>
-            </li>
-            <li class="{% active_link 'beers:value-select'%}">
-                <a href="{% url 'beers:value-select' %}">
-                    <i class="ti-panel"></i>
-                    <p>Value Select</p>
-                </a>
-            </li>
-            <li class="{% active_link 'beers:paginate'%}">
-                <a href="{% url 'beers:paginate' %}">
-                    <i class="ti-panel"></i>
-                    <p>Paginate</p>
                 </a>
             </li>
             <li class="{% active_link 'beers:create'%}">
@@ -54,6 +36,26 @@
                     <p>Tabs and forms</p>
                 </a>
             </li>
+            {% comment %} 
+            <li class="{% active_link 'beers:infinite-scroll'%}">
+                <a href="{% url 'beers:infinite-scroll' %}">
+                    <i class="ti-panel"></i>
+                    <p>Infinite Scroll</p>
+                </a>
+            </li> 
+            <li class="{% active_link 'beers:value-select'%}">
+                <a href="{% url 'beers:value-select' %}">
+                    <i class="ti-panel"></i>
+                    <p>Value Select</p>
+                </a>
+            </li> 
+            <li class="{% active_link 'beers:paginate'%}">
+                <a href="{% url 'beers:paginate' %}">
+                    <i class="ti-panel"></i>
+                    <p>Paginate</p>
+                </a>
+            </li> 
+            {% endcomment %}
         </ul>
     </div>
 </div>

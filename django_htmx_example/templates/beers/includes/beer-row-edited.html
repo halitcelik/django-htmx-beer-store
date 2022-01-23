@@ -1,4 +1,7 @@
 {% load favourite_tags %}
+{% if message %}
+    {% include "beers/includes/message.html" %}
+{% endif %}
 <div class="row fade-out"  style="border-top: 1px solid #f4f3ef;display: flex;">
     <a class="col-md-4" href="{{beer.get_absolute_url}}"><h5>{{beer.name|default:"n/a"}}</h5></a>
     <p style="margin-top: auto; margin-bottom: auto;" class="col-md-3">{{beer.category|default:"n/a"}}</p>

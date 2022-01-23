@@ -1,10 +1,15 @@
 {% extends 'base.html' %}
+{% block title %}Editing {{beer.name}}{% endblock title %}
 {% block content %}
-    <h1>Editing {{beer}} beer</h1>
-    <div class="row">
-        <div class="col-md-8">
+<div class="wrapper">
+
+    {% include "beers/includes/sidebar.html" %}
+
+    <div class="main-panel">
+        {% include "beers/includes/nav.html" with title="Editing beer details"%}
+        <div id="content" class="content" style="background: white;">
             {% include "beers/includes/form-row.html" %}
         </div>
     </div>
+</div>
 {% endblock content %}
-

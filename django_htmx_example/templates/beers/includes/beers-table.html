@@ -9,7 +9,7 @@
                 {% endfor %}   
                 <div class="flex">
                     {% if beers %}
-                        {% bootstrap_paginate beers range=10 show_first_last="true"%}
+                        {% include "pagination/pagination.html" %}
                     {% endif %}
                 </div>
             </div>

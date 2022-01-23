@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.conf.urls.i18n import i18n_patterns
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
@@ -6,7 +7,7 @@ from django.views import defaults as default_views
 from django.views.generic import TemplateView
 from django.views.generic.base import RedirectView
 
-urlpatterns = [
+urlpatterns = i18n_patterns(
     path("", RedirectView.as_view(permanent=False, url="examples/click-to-edit")),
     path(
         "about/", TemplateView.as_view(template_name="pages/about.html"), name="about"
@@ -18,8 +19,9 @@ urlpatterns = [
     path("examples/", include("beers.urls", namespace="examples")),
     path("accounts/", include("allauth.urls")),
     # Your stuff: custom urls includes go here
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
+urlpatterns += [path("i18n/", include("django.conf.urls.i18n"))]
 
 if settings.DEBUG:
     # This allows the error pages to be debugged during development, just visit

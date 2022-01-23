@@ -11,11 +11,6 @@
     display:inline;
 }
 
-
-.fade-out.htmx-added{
-
-}
-
 .fade-out.htmx-swapping {
     opacity: 0;
     transition: opacity .3s ease-out;
@@ -52,4 +47,18 @@
     left: 0;
     width: 100vw;
     z-index: 3;
+}
+
+
+.navbar .navbar-nav > li > form {
+  display: flex;
+  line-height: 1.42857;
+  margin: 16px 0px;
+  padding: 10px 15px;
+}
+
+.navbar .navbar-nav > li > form > input {
+  border: none;
+  background: transparent;
+  text-transform: capitalize;
 }
