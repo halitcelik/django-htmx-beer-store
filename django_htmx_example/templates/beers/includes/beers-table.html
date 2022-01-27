@@ -1,4 +1,4 @@
-{% load static i18n bootstrap_pagination %}
+{% load static i18n htmx_pagination_tags %}
 <div class="container-fluid">
     <div class="card">
         <div class="card-content">
@@ -6,12 +6,16 @@
                 <div class="flex htmx-indicator" style="position:absolute;left:calc(50% - 2rem);"><img class="" style="margin: auto;" src="{% static 'img/indicator.svg' %}"></div>
                 {% for beer in beers %}
                     {% include "beers/includes/beer-row.html" %}
-                {% endfor %}   
-                <div class="flex">
-                    {% if beers %}
-                        {% include "pagination/pagination.html" %}
-                    {% endif %}
-                </div>
+                {% endfor %}  
+                {% if not_found %}
+                    <h3>No results found</h3>
+                {% endif %} 
+            </div>
+            <div class="pagination">
+                {% if beers %}
+                    {% htmx_pagination beers %}
+                    <input type="hidden" name="p" value="{{beers.number}}">
+                {% endif %}
             </div>
         </div>
     </div>

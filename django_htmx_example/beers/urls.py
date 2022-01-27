@@ -2,6 +2,7 @@ from django.urls import path
 from .views import (
     click_to_edit,
     index,
+    mini_detail,
     similar,
     detail,
     delete,
@@ -22,6 +23,7 @@ app_name = "beers"
 urlpatterns = [
     path("list", index, name="all"),
     path("<int:pk>", detail, name="detail"),
+    path("mini/<int:pk>", mini_detail, name="mini-detail"),
     path("edit/<int:pk>", edit, name="edit"),
     path("delete/<int:pk>", delete, name="delete"),
     path("favourite/<int:pk>", favourite, name="favourite"),

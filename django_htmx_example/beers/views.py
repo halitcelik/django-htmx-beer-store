@@ -1,12 +1,14 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
-from .models import Brewery, BreweryLocation, Beer, Style, Category
+from .models import Beer, Style, Category
 from .forms import BeerForm, BeerDescriptionForm, BeerDetailsForm
-from django.db.models import Count
 from django.views.decorators.http import require_http_methods
 from django.urls import reverse
 from django.http import HttpResponse
+from .utils import mini_render
+from urllib.parse import urlparse
+from django.urls import resolve
 
 # Create your views here.
 
@@ -21,7 +23,7 @@ def index(request):
         beers = Beer.objects.search(query)
     else:
         beers = Beer.objects.all().prefetch_related("style", "category")
-    return render(
+    return mini_render(
         request,
         template,
         {
@@ -33,6 +35,11 @@ def index(request):
     )
 
 
+def mini_detail(request, pk):
+    beer = get_object_or_404(Beer, pk=pk)
+    return mini_render(request, "beers/detail.html", {"beer": beer})
+
+
 def detail(request, pk):
     beer = get_object_or_404(Beer, pk=pk)
     return render(request, "beers/detail.html", {"beer": beer})
@@ -41,13 +48,13 @@ def detail(request, pk):
 def add(request):
     ...
     beers = Paginator(Beer.objects.all(), 30)
-    return render(request, "beers/list.html", {"beers": beers})
+    return mini_render(request, "beers/list.html", {"beers": beers})
 
 
 def delete(request):
     ...
     beers = Paginator(Beer.objects.all(), 30)
-    return render(request, "beers/list.html", {"beers": beers})
+    return mini_render(request, "beers/list.html", {"beers": beers})
 
 
 def edit(request, pk):
@@ -79,9 +86,36 @@ def edit(request, pk):
 @require_http_methods(["DELETE"])
 def delete(request, pk):
     beer = get_object_or_404(Beer, pk=pk)
+    current_url = request.headers.get("HX-Current-Url")
+    page = 1
+    if current_url:
+        parsed = urlparse(current_url)
+        splitted = parsed.query.split("&")
+        for query in splitted:
+            if "p=" in query:
+                page_str = query.replace("p=", "")
+                if page_str and page_str.isdigit():
+                    page = int(page)
+
     beer.delete()
     message = f"{beer.name} is deleted."
-    return render(request, "beers/includes/delete-success.html", {"message": message})
+    beers = Paginator(
+        Beer.objects.filter(
+            category__isnull=False, style__isnull=False, name__isnull=False
+        ).prefetch_related("style", "category"),
+        10,
+    )
+
+    beer = Beer.objects.none()
+    if page < beers.num_pages:
+        next_page = beers.get_page(page)
+        if len(next_page.object_list):
+            beer = next_page.object_list[9]
+    return render(
+        request,
+        "beers/includes/delete-success.html",
+        {"message": message, "beer": beer},
+    )
 
 
 def active_search(request):
@@ -101,13 +135,14 @@ def active_search(request):
             "beers": Paginator(beers, 10).get_page(page),
             "page": page,
             "query": query,
+            "not_found": not beers.exists(),
         },
     )
 
 
 def click_to_edit(request):
     query = request.GET.get("q")
-    page = request.GET.get("page", 1)
+    page = request.GET.get("p", 1)
     template = "beers/click-to-edit.html"
     if request.htmx:
         template = "beers/includes/beers-table.html"
@@ -131,7 +166,7 @@ def click_to_edit(request):
 
 def infinite_scroll(request):
     query = request.GET.get("q")
-    page = request.GET.get("page", 1)
+    page = request.GET.get("p", 1)
     template = "beers/infinite-scroll.html"
     if request.htmx:
         template = "beers/includes/beer-row.html"
@@ -154,7 +189,7 @@ def infinite_scroll(request):
 
 def lazy_loading(request):
     query = request.GET.get("q")
-    page = request.GET.get("page", 1)
+    page = request.GET.get("p", 1)
     template = "beers/lazy-loading.html"
     beers = Beer.objects.none()
     if request.htmx:
@@ -183,6 +218,9 @@ def lazy_loading(request):
 
 def similar(request, pk):
     beer = get_object_or_404(Beer, pk=pk)
+    import time
+
+    time.sleep(1)
     similar_beers = Beer.objects.filter(
         category=beer.category, style=beer.style
     ).exclude(pk=beer.pk)[:3]
@@ -234,7 +272,7 @@ def value_select(request):
 
 
 def paginate(request):
-    page = request.GET.get("page", 1)
+    page = request.GET.get("p", 1)
     template = "beers/paginate.html"
     beers = Beer.objects.filter(
         category__isnull=False, style__isnull=False

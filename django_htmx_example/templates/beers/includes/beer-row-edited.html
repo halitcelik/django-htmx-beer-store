@@ -10,7 +10,16 @@
         <a href="{% url 'beers:edit' beer.pk %}"  data-hx-target="closest .row" data-hx-get="{% url 'beers:edit' beer.pk %}" data-hx-swap="outerHTML" class="btn btn-simple btn-xs btn-info btn-icon like"><i class="ti-pencil"></i></a>
         <a href="{% url 'beers:delete' beer.pk %}" hx-headers='{"X-CSRFToken": "{{ csrf_token }}" }' data-hx-target="closest .row" data-hx-delete="{% url 'beers:delete' beer.pk %}" data-hx-swap="outerHTML swap:.3s" data-hx-confirm="Are you sure to delete {{beer.name}}" class="btn btn-simple btn-xs btn-danger btn-icon remove"><i class="ti-close"></i></a>
         {% if request.user.is_authenticated %}
-            <a href="{% url 'beers:favourite' beer.pk %}"  data-hx-target="closest .row" data-hx-put="{% url 'beers:favourite' beer.pk %}" data-hx-swap="outerHTML" class="btn btn-simple btn-xs {% is_in_favourites beer %} btn-icon"><i class="ti-heart"></i></a>
+            <a href="{% url 'beers:favourite' beer.pk %}"  data-hx-target="closest .row" data-hx-put="{% url 'beers:favourite' beer.pk %}" data-hx-swap="outerHTML" class="btn btn-simple btn-xs {% is_in_favourites beer %} btn-icon">
+                <svg version="1.1" id="Capa_1" style="margin-top: 8px;padding: 2px;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
+                    y="0px" width="20px" height="20px" viewBox="0 0 45.743 45.743"
+                    style="enable-background:new 0 0 45.743 45.743;" xml:space="preserve">
+                        <path fill="{% is_in_favourites beer %}" d="M34.199,3.83c-3.944,0-7.428,1.98-9.51,4.997c0,0-0.703,1.052-1.818,1.052c-1.114,0-1.817-1.052-1.817-1.052
+                        c-2.083-3.017-5.565-4.997-9.51-4.997C5.168,3.83,0,8.998,0,15.376c0,1.506,0.296,2.939,0.82,4.258
+                        c3.234,10.042,17.698,21.848,22.051,22.279c4.354-0.431,18.816-12.237,22.052-22.279c0.524-1.318,0.82-2.752,0.82-4.258
+                        C45.743,8.998,40.575,3.83,34.199,3.83z" />
+                </svg>
+            </a>
         {% endif %}
     </p>
 </div>

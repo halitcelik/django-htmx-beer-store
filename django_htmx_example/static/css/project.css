@@ -44,9 +44,10 @@
 
 .alert-success {
     position: absolute;
-    left: 0;
-    width: 100vw;
+    left: 25vw;
+    width: 50vw;
     z-index: 3;
+    border-radius: 0 0 4px 4px!important;
 }
 
 
@@ -62,3 +63,17 @@
   background: transparent;
   text-transform: capitalize;
 }
+
+.card-content:not(.row) {
+  display: flex;
+  flex-direction: column;
+  min-height: 660px;
+}
+
+.card-content > .pagination {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: auto;
+}
+
+

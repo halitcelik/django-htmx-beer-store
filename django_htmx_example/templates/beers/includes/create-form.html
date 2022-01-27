@@ -5,6 +5,7 @@
         data-hx-swap="innerHTML"
         data-hx-push-url="true"
         >
+        {% csrf_token %}
         <div class="card-header text-center">
             <h4 class="card-title">Add your own beer</h4>
             <p class="category">Split a django form in multiple steps</p>

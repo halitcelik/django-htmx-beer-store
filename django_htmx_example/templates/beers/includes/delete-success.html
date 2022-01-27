@@ -3,3 +3,9 @@
     {% include "beers/includes/message.html" %}
 {% endif %}
 {% favourites_count %}
+
+{% if beer %}
+<div data-hx-swap-oob="beforeend:#datatables">
+    {% include 'beers/includes/beer-row.html' %}
+</div>
+{% endif %}
