@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Floating-dots</title>
+</head>
+
+<style>
+    body {
+        display: flex;
+        flex-direction: column;
+    }
+    .row {
+        display: flex;
+        justify-content: space-around;
+        margin: auto;
+        width: 100%;
+
+    }
+    {% for i, value in rows.items %}
+    {% if i < 90 %}
+        .row:nth-of-type({{i}}) {
+            width: calc(150px + {{i}}%);
+        }
+    {% else %}
+        .row:nth-of-type({{i}}) {
+            width: calc(100% - ({{i}}px - 100%));
+        }
+    {% endif %}
+    {% endfor %}
+</style>
+<body>
+    {% for key, value in rows.items %}
+        <div class="row">
+        {% for dot in value %}
+            <span id="{{dot.pk}}"class="dot">.</span>
+        {% endfor %}
+        </div>
+    {% endfor %}
+
+</body>
+
+</html>

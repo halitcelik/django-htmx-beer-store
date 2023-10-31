@@ -347,6 +347,19 @@ def favourite(request, pk):
         return render(request, "beers/includes/favourite.html", {"beer": beer})
 
 
+def floating_dots(request):
+    ids = Beer.objects.values("pk")
+    rows = {}
+    row = []
+    for i in range(1, len(ids)):
+        row.append(ids[i])
+        if i % 30 == 0:
+            rows[int(i / 30)] = row
+            row = []
+
+    return render(request, "floating-dots.html", {"rows": rows})
+
+
 # def click_to_edit(request):
 #     beers = Paginator(Beer.objects.all(), 30)
 #     return render(request, "beers/list.html", {"beers": beers})

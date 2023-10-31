@@ -21,7 +21,10 @@ urlpatterns = i18n_patterns(
     # Your stuff: custom urls includes go here
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-urlpatterns += [path("i18n/", include("django.conf.urls.i18n"))]
+urlpatterns += [
+    path("i18n/", include("django.conf.urls.i18n")),
+    path("group-items/", include("admin_group_items.urls")),
+]
 
 if settings.DEBUG:
     # This allows the error pages to be debugged during development, just visit

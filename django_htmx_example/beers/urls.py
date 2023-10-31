@@ -15,6 +15,7 @@ from .views import (
     style_select,
     value_select,
     paginate,
+    floating_dots,
 )
 
 
@@ -37,4 +38,5 @@ urlpatterns = [
     path("paginate", paginate, name="paginate"),
     path("tabs-and-forms", create, name="create"),
     path("tabs-and-forms/<int:step>", create, name="create"),
+    path("floating-dots", floating_dots, name="floating-dots"),
 ]
