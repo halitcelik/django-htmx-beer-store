@@ -1,4 +1,3 @@
 # django-htmx-beer-store
-
-
-```python manage.py loaddata beers.json```
+```python manage.py import_beers```
+```python manage.py runserver```
